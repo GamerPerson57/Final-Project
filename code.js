@@ -1,23 +1,24 @@
+import { TitleScreen } from "./states/titleScreen.js";
+import { Game } from "./states/game.js";
+import { GameOver } from "./states/gameOver.js";
 import { Toolbox } from "./toolbox.js";
 
 let canvas = document.getElementById("myCanvas");
 let pencil = canvas.getContext("2d"); // This gives you the drawing context, like a pencil
 let toolbox = new Toolbox();
 
-// let myFavoriteLetters = ["a", "b", "c"];
+// make some states
+let titleScreen = new TitleScreen();
+let game = new Game();
+let gameOver = GameOver();
 
+let state = titleScreen;
 
-// let counts = [0,0,0];
-// for(let i = 0; i < 100; i++) {
-// //     let randomIndex = getRandomIndex(myFavoriteLetters);
-// //     counts[randomIndex] += 1;
+function gameLoop() {
+    let result = state.update();
+    if (result == "goToGame") state = game;
+    if (result == "goToGameOver") state = gameOver;
+    if (result == "goToTitleScreen") state = titleScreen;
+}
 
-//     console.log(toolbox.getRandomItem(myFavoriteLetters));
-// }
-
-
-// let shuffled = toolbox.shuffleArray(myFavoriteLetters);
-// console.log(shuffled);
-
-// pencil.fillstyle = toolbox.getRandomColor();
-// pencil.fillRect = (50, 50, 100, 100);
+setInterval(gameLoop, 1000 / 60); // 60 FPS
