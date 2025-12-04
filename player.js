@@ -1,4 +1,5 @@
 export class Player {
+    
     x = 75;
     y = 75;
     width = 75;
@@ -22,8 +23,8 @@ export class Player {
 
     draw() {
         // draw player
-        this.pencil.drawImage(
-            // this.sprite,
+        this.pencil.fillStyle = 'black'; // temporary until sprite is added
+        this.pencil.fillRect(
             this.x, 
             this.y, 
             this.width, 
@@ -31,6 +32,7 @@ export class Player {
         ); // x, y, w, h
     }
 
+    // movement function that detects which key is pressed
     move(keysPressed) {
         if(keysPressed[this.upKey]) {
             this.y -= this.speed;

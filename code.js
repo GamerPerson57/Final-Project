@@ -2,16 +2,16 @@ import { TitleScreen } from "./states/titleScreen.js";
 import { Game } from "./states/game.js";
 import { GameOver } from "./states/gameOver.js";
 import { Toolbox } from "./toolbox.js";
-import { Player } from "player.js";
+import { Player } from "./player.js";
 
 let canvas = document.getElementById("myCanvas");
 let pencil = canvas.getContext("2d"); // This gives you the drawing context, like a pencil
-let toolbox = new Toolbox();
 
 // make some states
-let titleScreen = new TitleScreen();
-let game = new Game();
-let gameOver = GameOver();
+let titleScreen = new TitleScreen(canvas, pencil);
+let game = new Game(canvas, pencil);
+let gameOver = new GameOver(canvas, pencil);
+let player = new Player(canvas, pencil);
 
 let state = titleScreen;
 
@@ -25,10 +25,31 @@ window.addEventListener("keyup", function(e) {
 });
 
 function gameLoop() {
-    let result = state.update();
-    if (result == "goToGame") state = game;
-    if (result == "goToGameOver") state = gameOver;
-    if (result == "goToTitleScreen") state = titleScreen;
+    // Always clear before drawing
+    pencil.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Update current state
+    let nextState = state.update(canvas, pencil);
+
+    // Transition
+    if (nextState) {
+        state = nextState;
+    }
+
+    if (state == gameOver) {
+        
+    }
+
+    if (state == titleScreen) {
+        titleScreen.draw();
+    }
+
+    // If we're in the game, draw and move player
+    if (state == game) {
+        player.draw();
+        player.move(keysPressed);
+    }
 }
 
 setInterval(gameLoop, 1000 / 60); // 60 FPS
+
