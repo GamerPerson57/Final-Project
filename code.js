@@ -46,6 +46,7 @@ function gameLoop() {
 
     // If we're in the game, draw and move player
     if (state == game) {
+        game.draw();
         player.draw();
         player.move(keysPressed);
     }

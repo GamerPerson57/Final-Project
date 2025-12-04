@@ -2,7 +2,6 @@ export class TitleScreen {
     constructor(canvas, pencil) {
         this.canvas = canvas;
         this.pencil = pencil;
-        this.nextState = null;
 
         this.background = new Image();
         this.background.src = "./images/background.jpg";
@@ -22,14 +21,18 @@ export class TitleScreen {
                     mouseY <= y
                 ) {
                     console.log("Start Game clicked!");
-                    this.nextState = "goToGame";
+                    this.startClicked = true
                 }
             }
         });
     }
     
     update() {
-        if (this.nextState == "goToGame") return Game;
+        if (this.startClicked) {
+            return Game;
+        } else {
+            return titleScreen;
+        }
     }
 
     draw() {
