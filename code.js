@@ -52,4 +52,3 @@ function gameLoop() {
 }
 
 setInterval(gameLoop, 1000 / 60); // 60 FPS
-
