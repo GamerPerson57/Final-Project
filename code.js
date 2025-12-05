@@ -29,7 +29,8 @@ window.addEventListener("keyup", function(e) {
 });
 
 function gameLoop() {
-    // Always clear before drawing
+
+    // erase canvas
     pencil.clearRect(0, 0, canvas.width, canvas.height);
 
 
@@ -42,11 +43,11 @@ function gameLoop() {
         titleScreen.update();
     }
 
-    // If we're in the game, draw and move player
     if (state == game) {
         game.draw();
         player.draw();
         player.move(keysPressed);
+        player.interact(keysPressed);
         key.draw();
     }
 }

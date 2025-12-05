@@ -7,6 +7,9 @@ export class Game {
 
         this.background2 = new Image();
         this.background2.src = "./images/background2.jpg";
+
+        this.door = new Image();
+        this.door.src = "./images/door.png";
     }
     
     update() {
@@ -20,13 +23,9 @@ export class Game {
         // draw background
         this.pencil.drawImage(this.background2, 0, 0, this.canvas.width, this.canvas.height);
 
-        // this.pencil.fillStyle = "red";
+        // draw door
+        this.pencil.drawImage(this.door, 200, -25, 200, 200);
 
-        // const squareSize = 350;
-        // const x = (this.canvas.width / 2) - (squareSize / 2);
-        // const y = (this.canvas.height / 2) - (squareSize / 2);
-
-        // this.pencil.fillRect(x, y, squareSize, squareSize);
         
     }
 }
