@@ -3,6 +3,7 @@ import { Game } from "./states/game.js";
 import { GameOver } from "./states/gameOver.js";
 import { Toolbox } from "./toolbox.js";
 import { Player } from "./player.js";
+import { Key } from "./key.js";
 
 let canvas = document.getElementById("myCanvas");
 let pencil = canvas.getContext("2d"); // This gives you the drawing context, like a pencil
@@ -11,9 +12,12 @@ let pencil = canvas.getContext("2d"); // This gives you the drawing context, lik
 let titleScreen = new TitleScreen(canvas, pencil);
 let game = new Game(canvas, pencil);
 let gameOver = new GameOver(canvas, pencil);
-let player = new Player(canvas, pencil);
 
-let state = titleScreen;
+
+let player = new Player(canvas, pencil);
+let key = new Key(canvas, pencil);
+
+let state = game; // when finished change this back to titleScreen
 
 // tracks keys pressed
 let keysPressed = {};
@@ -28,13 +32,6 @@ function gameLoop() {
     // Always clear before drawing
     pencil.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Update current state
-    let nextState = state.update(canvas, pencil);
-
-    // Transition
-    if (nextState) {
-        state = nextState;
-    }
 
     if (state == gameOver) {
         
@@ -42,6 +39,7 @@ function gameLoop() {
 
     if (state == titleScreen) {
         titleScreen.draw();
+        titleScreen.update();
     }
 
     // If we're in the game, draw and move player
@@ -49,6 +47,7 @@ function gameLoop() {
         game.draw();
         player.draw();
         player.move(keysPressed);
+        key.draw();
     }
 }
 

@@ -1,7 +1,7 @@
 export class Player {
     
     x = 75;
-    y = 75;
+    y = 80;
     width = 75;
     height = 75;
     speed = 5;
@@ -17,14 +17,14 @@ export class Player {
         this.canvas = canvas;
         this.pencil = pencil;
 
-        // this.sprite = new Image()
-        // this.sprite.src = "";
+        this.image = new Image()
+        this.image.src = "./images/knight.png";
     }
 
     draw() {
         // draw player
-        this.pencil.fillStyle = 'black'; // temporary until sprite is added
-        this.pencil.fillRect(
+        this.pencil.drawImage(
+            this.image,
             this.x, 
             this.y, 
             this.width, 
@@ -34,20 +34,29 @@ export class Player {
 
     // movement function that detects which key is pressed
     move(keysPressed) {
-        if(keysPressed[this.upKey]) {
-            this.y -= this.speed;
-            // this.sprite = zombieBack;
-        } else if(keysPressed[this.downKey]) {
-            this.y += this.speed;
-            // this.sprite = zombieFront;
-        } else if(keysPressed[this.leftKey]) {
-            this.x -= this.speed;
-            // this.sprite = zombieLeft;
-        } else if(keysPressed[this.rightKey]) {
-            this.x += this.speed;
-            // this.sprite = zombieRight;
-        } 
-    }
+        if (keysPressed[this.upKey]) this.y -= this.speed;
+        if (keysPressed[this.downKey]) this.y += this.speed;
+        if (keysPressed[this.leftKey]) this.x -= this.speed;
+        if (keysPressed[this.rightKey]) this.x += this.speed;
 
+        // Clamp values so player stays inside canvas
+        if (this.x < 55) this.x = 55;
+        if (this.y < 55) this.y = 55;
+        if (this.x + this.width > this.canvas.width) {
+            this.x = this.canvas.width - this.width;
+        }
+        if (this.y + this.height > this.canvas.height) {
+            this.y = this.canvas.height - this.height;
+        }
+
+        if (this.x > 470) this.x = 470;
+        if (this.y > 470) this.y = 470;
+        if (this.x + this.width > this.canvas.width) {
+            this.x = this.canvas.width - this.width;
+        }
+        if (this.y + this.height > this.canvas.height) {
+            this.y = this.canvas.height - this.height;
+        }
+    }
 
 }

@@ -29,10 +29,9 @@ export class TitleScreen {
     
     update() {
         if (this.startClicked) {
-            return Game;
-        } else {
-            return titleScreen;
-        }
+            return game;
+        } 
+        return titleScreen;
     }
 
     draw() {
