@@ -9,7 +9,6 @@ export class Player {
     downKey = "s";
     leftKey = "a";
     rightKey = "d"
-    interactKey = "e"
     canvas;
     pencil;
     
@@ -57,19 +56,6 @@ export class Player {
         }
         if (this.y + this.height > this.canvas.height) {
             this.y = this.canvas.height - this.height;
-        }
-    }
-
-    // when e is pressed, one of these interactions will occur
-    interact(keysPressed) {
-        if (keysPressed[this.interactKey]) {
-            if (this.x == 260 && this.y == 55) { // this will log door when the player interacts with the door
-                console.log("door!");
-            } else if (this.x == 100 && this.y == 100) { // this will log blank when the player interacts with blank
-            
-            } else if (this.x == 260 && this.y == 275) { // this will log key when the player interacts with the key
-                console.log("key!");
-            }
         }
     }
 

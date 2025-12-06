@@ -18,7 +18,7 @@ export class Key {
     }
 
     draw() {
-        // if (!this.visible) return; //skips drawing if hidden
+        if (!this.visible) return; //skips drawing if hidden
 
         // draw player
         this.pencil.drawImage(

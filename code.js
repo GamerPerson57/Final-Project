@@ -47,8 +47,19 @@ function gameLoop() {
         game.draw();
         player.draw();
         player.move(keysPressed);
-        player.interact(keysPressed);
         key.draw();
+
+        if (player.x == 260 && player.y == 55) { // this will log door when the player interacts with the door
+            console.log("door!");
+        } else if (
+            (player.x == 240 && player.y == 200) 
+            && (player.x == 100 && player.y == 100) 
+            && (player.x == 100 && player.y == 100) 
+            && (player.x == 100 && player.y == 100)) { // this will log blank when the player interacts with blank
+                console.log("floor 1");
+        } else if (player.x == 260 && player.y == 275) { // this will log key when the player interacts with the key
+            key.show();
+        }
     }
 }
 
