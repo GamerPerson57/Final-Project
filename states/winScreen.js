@@ -1,8 +1,10 @@
-export class GameOver {
+export class WinScreen{
 
     constructor(canvas, pencil) {
         this.canvas = canvas;
         this.pencil = pencil;
+
+        this.startClicked = false;
 
         // allows text to be clickable
         this.canvas.addEventListener("click", (event) => {
@@ -29,7 +31,7 @@ export class GameOver {
 
     draw() {
         this.pencil.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.pencil.fillStyle = "#7a0a04"
+        this.pencil.fillStyle = "Green"
         this.pencil.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.pencil.font = "50px Times New Roman";
@@ -41,8 +43,8 @@ export class GameOver {
         const centerY = this.canvas.height / 2;  // 300
         const lineSpacing = 80; // space between lines
 
-        // Draws "Game Over" Text
-        this.pencil.fillText("You Died!", centerX, centerY - lineSpacing);
+        // Draws "You Win" Text
+        this.pencil.fillText("You Win!", centerX, centerY - lineSpacing);
 
         // Draws "Restart" Text
         const text = "Restart?";
