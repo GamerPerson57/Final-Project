@@ -4,9 +4,10 @@ export class Key {
     y = 275;
     width = 75;
     height = 75;
+    speed = 5;
     canvas;
     pencil;
-    visible = true;
+    visible = false;
 
     constructor(canvas, pencil) {
         this.canvas = canvas;
