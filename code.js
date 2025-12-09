@@ -22,16 +22,25 @@ let player = new Player(canvas, pencil);
 let key = new Key(canvas, pencil);
 let door = new Door(canvas, pencil);
 
-let trap1 = new Trap(canvas, pencil);
-let trap2 = new Trap(canvas, pencil);
-let trap3 = new Trap(canvas, pencil);
-let trap4 = new Trap(canvas, pencil);
-let trap5 = new Trap(canvas, pencil);
-let trap6 = new Trap(canvas, pencil);
-let trap7 = new Trap(canvas, pencil);
-let trap8 = new Trap(canvas, pencil);
-let trap9 = new Trap(canvas, pencil);
-let trap10 = new Trap(canvas, pencil);
+const trapPositions = [
+    { x: 185, y: 230 },
+    { x: 425, y: 235 },
+    { x: 145, y: 365 },
+    { x: 65,  y: 165 },
+    { x: 344, y: 425 },
+    { x: 65,  y: 300 },
+    { x: 300, y: 165 },
+    { x: 385, y: 165 },
+    { x: 345, y: 300 },
+    { x: 185, y: 105 }
+];
+
+let traps = trapPositions.map(pos => {
+  let t = new Trap(canvas, pencil);
+  t.x = pos.x;
+  t.y = pos.y;
+  return t;
+});
 
 let state = titleScreen; // when finished change this back to titleScreen
 
@@ -44,7 +53,67 @@ window.addEventListener("keyup", function(e) {
     keysPressed[e.key] = false;
 });
 
-function isColliding(a, b, padding = 16) {
+
+function resetGame() {
+    // Reset player position
+    player.x = 50;
+    player.y = 50;
+
+    // Reset key and door
+    key.show();
+    door.hide();
+
+    keysPressed = {};
+
+}
+
+function updateState() {
+     if (state == titleScreen) {
+        if (titleScreen.startClicked == true) {
+            state = game;
+            resetGame();
+            titleScreen.startClicked = false; // reset flag
+            winScreen.restartClicked = false; // reset flag
+            gameOver.restartClicked = false; // reset flag
+        }
+    }
+
+    if (state == game) {
+        
+        // Collision check with any trap
+        if (traps.some(trap => isColliding(player, trap, 14))) {
+            state = gameOver;
+        }
+
+        if (isColliding(player, door) && door.visible) {
+            state = winScreen;
+        }
+
+        if (isColliding(player, key)) {
+            console.log("key");
+            key.hide();
+            door.show();
+        }
+    }
+
+    if (state == gameOver && gameOver.restartClicked) {
+        resetGame();
+        state = titleScreen;
+        titleScreen.startClicked = false; // reset flag
+        winScreen.restartClicked = false; // reset flag
+        gameOver.restartClicked = false; // reset flag
+    }
+
+    if (state == winScreen && winScreen.restartClicked) {
+        resetGame();
+        state = titleScreen;
+        titleScreen.startClicked = false; // reset flag
+        winScreen.restartClicked = false; // reset flag
+        gameOver.restartClicked = false; // reset flag
+    }
+}
+
+function isColliding(a, b, padding = 24) {
   return (
     a.x + padding < b.x + b.width - padding &&
     a.x + a.width - padding > b.x + padding &&
@@ -58,6 +127,22 @@ function gameLoop() {
     // erase canvas
     pencil.clearRect(0, 0, canvas.width, canvas.height);
 
+    updateState();
+
+    if (state == titleScreen) {
+        titleScreen.draw();
+    }
+
+    if (state == game) {
+        game.draw();
+
+        traps.forEach(trap => trap.draw());
+
+        door.draw();
+        player.draw();
+        player.move(keysPressed);
+        key.draw();
+    }
 
     if (state == gameOver) {
         gameOver.draw();
@@ -68,99 +153,6 @@ function gameLoop() {
         
     }
 
-    if (state == titleScreen) {
-        titleScreen.draw();
-    }
-
-    if (state == game) {
-        game.draw();
-
-        // Trap 1 Location
-        trap1.x = 185;
-        trap1.y = 230;
-        trap1.draw();
-
-        // Trap 2 Location
-        trap2.x = 425;
-        trap2.y = 235;
-        trap2.draw();
-
-        // Trap 3 Location
-        trap3.x = 145;
-        trap3.y = 365;
-        trap3.draw();
-
-        // Trap 4 Location
-        trap4.x = 65;
-        trap4.y = 165;
-        trap4.draw();
-
-        // Trap 5 Location
-        trap5.x = 344;
-        trap5.y = 425;
-        trap5.draw();
-
-        // Trap 6 Location
-        trap6.x = 65;
-        trap6.y = 300;
-        trap6.draw();
-
-        // Trap 7 Location
-        trap7.x = 300;
-        trap7.y = 165;
-        trap7.draw();
-
-        // Trap 8 Location
-        trap8.x = 385;
-        trap8.y = 165;
-        trap8.draw();
-
-        // Trap 9 Location
-        trap9.x = 345;
-        trap9.y = 300;
-        trap9.draw();
-
-        // Trap 10 Location
-        trap10.x = 185;
-        trap10.y = 105;
-        trap10.draw();
-
-        // draw player, key, and door(starts out invisble)
-        door.draw();
-        player.draw();
-        player.move(keysPressed);
-        key.draw();
-
-        if (
-            isColliding(player, trap1, 14) ||
-            isColliding(player, trap2, 14) ||
-            isColliding(player, trap3, 14) ||
-            isColliding(player, trap4, 14) ||
-            isColliding(player, trap5, 14) ||
-            isColliding(player, trap6, 14) ||
-            isColliding(player, trap7, 14) ||
-            isColliding(player, trap8, 14) ||
-            isColliding(player, trap9, 14) ||
-            isColliding(player, trap10, 14) 
-        ) {
-            state = gameOver;
-        }
-
-
-
-        
-        if ((player.x == 260 && player.y == 55) && (door.visible == true)) { // this will log door when the player interacts with the door
-            state = winScreen;
-        } 
-
-        if (
-            isColliding(player, key)
-        ) {
-            console.log("key");
-            key.hide();
-            door.show();
-        }
-    }
 }
 
 setInterval(gameLoop, 1000 / 60); // 60 FPS

@@ -2,7 +2,7 @@ export class Trap {
     
     x = 0;
     y = 0;
-    width = 75;
+    width = 70;
     height = 70;
     speed = 5;
     canvas;
@@ -29,6 +29,17 @@ export class Trap {
             this.height
         ); // x, y, w, h
     }
+
+    drawBoundingBox(color = "blue", shrink = 0) {
+        this.pencil.strokeStyle = color;
+        this.pencil.strokeRect(
+            this.x + shrink,
+            this.y + shrink,
+            this.width - shrink * 2,
+            this.height - shrink * 2
+        );
+    }
+
 
     show() {
         this.visible = true;

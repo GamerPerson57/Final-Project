@@ -4,6 +4,8 @@ export class GameOver {
         this.canvas = canvas;
         this.pencil = pencil;
 
+        this.restartClicked = false;
+
         // allows text to be clickable
         this.canvas.addEventListener("click", (event) => {
             const rect = this.canvas.getBoundingClientRect();
@@ -15,11 +17,11 @@ export class GameOver {
                 if (
                     mouseX >= x - width / 2 &&
                     mouseX <= x + width / 2 &&
-                    mouseY >= y - height &&
-                    mouseY <= y
+                    mouseY >= y - height / 2 &&
+                    mouseY <= y + height / 2
                 ) {
                     console.log("Restart!");
-                    this.startClicked = true
+                    this.restartClicked = true;
                 }
             }
         });
@@ -33,7 +35,7 @@ export class GameOver {
         this.pencil.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.pencil.font = "50px Times New Roman";
-        this.pencil.fillStyle = "Black";
+        this.pencil.fillStyle = "White";
         this.pencil.textAlign = "center";
         this.pencil.textBaseline = "middle";
 
@@ -52,6 +54,12 @@ export class GameOver {
         const metrics = this.pencil.measureText(text);
         const textWidth = metrics.width;
         const textHeight = 50; // approximate from font size
-        this.textBounds = { x: centerX, y: centerY + lineSpacing, width: textWidth, height: textHeight };
+
+        this.textBounds = {
+            x: centerX,
+            y: centerY + lineSpacing,
+            width: textWidth,
+            height: textHeight
+        };
     }
 }

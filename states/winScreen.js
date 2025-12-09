@@ -1,10 +1,10 @@
-export class WinScreen{
+export class WinScreen {
 
     constructor(canvas, pencil) {
         this.canvas = canvas;
         this.pencil = pencil;
 
-        this.startClicked = false;
+        this.restartClicked = false;
 
         // allows text to be clickable
         this.canvas.addEventListener("click", (event) => {
@@ -17,11 +17,11 @@ export class WinScreen{
                 if (
                     mouseX >= x - width / 2 &&
                     mouseX <= x + width / 2 &&
-                    mouseY >= y - height &&
-                    mouseY <= y
+                    mouseY >= y - height / 2 &&
+                    mouseY <= y + height / 2
                 ) {
                     console.log("Restart!");
-                    this.startClicked = true
+                    this.restartClicked = true;
                 }
             }
         });
@@ -31,11 +31,11 @@ export class WinScreen{
 
     draw() {
         this.pencil.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.pencil.fillStyle = "Green"
+        this.pencil.fillStyle = "green"
         this.pencil.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.pencil.font = "50px Times New Roman";
-        this.pencil.fillStyle = "Black";
+        this.pencil.fillStyle = "White";
         this.pencil.textAlign = "center";
         this.pencil.textBaseline = "middle";
 
@@ -43,8 +43,8 @@ export class WinScreen{
         const centerY = this.canvas.height / 2;  // 300
         const lineSpacing = 80; // space between lines
 
-        // Draws "You Win" Text
-        this.pencil.fillText("You Win!", centerX, centerY - lineSpacing);
+        // Draws "Game Over" Text
+        this.pencil.fillText("You Died!", centerX, centerY - lineSpacing);
 
         // Draws "Restart" Text
         const text = "Restart?";
@@ -54,6 +54,12 @@ export class WinScreen{
         const metrics = this.pencil.measureText(text);
         const textWidth = metrics.width;
         const textHeight = 50; // approximate from font size
-        this.textBounds = { x: centerX, y: centerY + lineSpacing, width: textWidth, height: textHeight };
+
+        this.textBounds = {
+            x: centerX,
+            y: centerY + lineSpacing,
+            width: textWidth,
+            height: textHeight
+        };
     }
 }

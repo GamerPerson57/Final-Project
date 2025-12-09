@@ -6,6 +6,8 @@ export class TitleScreen {
         this.background = new Image();
         this.background.src = "./images/background.jpg";
 
+        this.startClicked = false;
+
         // allows text to be clickable
         this.canvas.addEventListener("click", (event) => {
             const rect = this.canvas.getBoundingClientRect();
@@ -17,17 +19,16 @@ export class TitleScreen {
                 if (
                     mouseX >= x - width / 2 &&
                     mouseX <= x + width / 2 &&
-                    mouseY >= y - height &&
-                    mouseY <= y
+                    mouseY >= y - height / 2 &&
+                    mouseY <= y + height / 2
                 ) {
                     console.log("Start Game clicked!");
-                    this.startClicked = true
+                    this.startClicked = true;
                 }
             }
         });
     }
     
-   
 
     draw() {
         // clear canvas
@@ -40,7 +41,7 @@ export class TitleScreen {
         this.pencil.font = "50px Times New Roman";
         this.pencil.fillStyle = "white";
         this.pencil.textAlign = "center";
-        const text = "Start Game";
+        const text = "Start";
         const x = this.canvas.width / 2;
         const y = this.canvas.height / 2;
         this.pencil.fillText(text, x, y);
