@@ -1,9 +1,10 @@
-export class Key {
+export class Trap {
     
-    x = 260;
-    y = 275;
+    x = 0;
+    y = 0;
     width = 75;
-    height = 75;
+    height = 70;
+    speed = 5;
     canvas;
     pencil;
     visible = true;
@@ -13,7 +14,7 @@ export class Key {
         this.pencil = pencil;
 
         this.image = new Image()
-        this.image.src = "./images/key.png";
+        this.image.src = "./images/spike.png";
     }
 
     draw() {

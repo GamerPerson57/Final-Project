@@ -1,19 +1,19 @@
-export class Key {
+export class Door {
     
-    x = 260;
-    y = 275;
-    width = 75;
-    height = 75;
+    x = 200;
+    y = -25;
+    width = 200;
+    height = 200;
     canvas;
     pencil;
-    visible = true;
+    visible = false;
 
     constructor(canvas, pencil) {
         this.canvas = canvas;
         this.pencil = pencil;
 
         this.image = new Image()
-        this.image.src = "./images/key.png";
+        this.image.src = "./images/door.png";
     }
 
     draw() {

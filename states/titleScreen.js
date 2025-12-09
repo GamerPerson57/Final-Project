@@ -27,12 +27,7 @@ export class TitleScreen {
         });
     }
     
-    update() {
-        if (this.startClicked) {
-            return game;
-        } 
-        return titleScreen;
-    }
+   
 
     draw() {
         // clear canvas
